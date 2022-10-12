@@ -24,7 +24,7 @@ public class MapServer {
     /**
      * Default port for serving the application locally.
      */
-    private static final int PORT = 8080;
+    private static final int PORT = 15777;
     /**
      * The OpenStreetMap XML file path. Downloaded from <a href="http://download.bbbike.org/osm/">BBBike</a>
      * using custom region selection.
