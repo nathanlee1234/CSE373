@@ -24,7 +24,7 @@ public class SequentialSearchAutocomplete implements Autocomplete {
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code
+        this.terms.addAll(terms);
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
