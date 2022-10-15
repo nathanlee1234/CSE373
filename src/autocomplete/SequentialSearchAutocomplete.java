@@ -31,7 +31,7 @@ public class SequentialSearchAutocomplete implements Autocomplete {
     public List<CharSequence> allMatches(CharSequence prefix) {
         ArrayList<CharSequence> matches = new ArrayList<>();
         for (CharSequence term : terms) {
-            if (term.subSequence(0, prefix.length()) == prefix) matches.add(term);
+            if (prefix == term.subSequence(0, prefix.length())) matches.add(term);
         }
         return matches;
     }
