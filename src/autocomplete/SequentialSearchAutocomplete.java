@@ -30,8 +30,8 @@ public class SequentialSearchAutocomplete implements Autocomplete {
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
         ArrayList<CharSequence> matches = new ArrayList<>();
-        for (CharSequence term : terms) {
-            if (prefix == term.subSequence(0, prefix.length())) matches.add(term);
+        for (CharSequence term : this.terms) {
+            if (Autocomplete.isPrefixOf(prefix, term)) matches.add(term);
         }
         return matches;
     }
