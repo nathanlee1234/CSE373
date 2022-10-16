@@ -34,7 +34,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
         int matchingIndex = Collections.binarySearch(terms, prefix, CharSequence::compare);
         if (matchingIndex === -1) return matches;
         for (int i = matchingIndex; i < terms.size; i++) {
-            if (prefix == terms[i].subSequence(0, prefix.length())) matches.add(term);
+            if (prefix == terms[i].subSequence(0, prefix.length())) matches.add(terms[i]);
         }
         return matches;
     }
