@@ -24,13 +24,18 @@ public class BinarySearchAutocomplete implements Autocomplete {
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        this.terms.addAll(terms);
+        Collections.sort(this.terms, CharSequence::compare);
     }
 
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        ArrayList<CharSequence> matches = new ArrayList<>();
+        int matchingIndex = Collections.binarySearch(terms, prefix, CharSequence::compare);
+        if (matchingIndex === -1) return matches;
+        for (int i = matchingIndex; i < terms.size; i++) {
+            if (prefix == terms[i].subSequence(0, prefix.length())) matches.add(term);
+        }
+        return matches;
     }
 }
