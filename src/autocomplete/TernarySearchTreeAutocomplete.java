@@ -1,5 +1,7 @@
 package autocomplete;
 
+import org.objectweb.asm.tree.analysis.Value;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -21,10 +23,28 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         overallRoot = null;
     }
 
+    public void put(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("calls put() with null key");
+        }
+        overallRoot = put(overallRoot, key, 0);
+    }
+
+    private Node put(Node x, String key, int d) {
+        char c = key.charAt(d);
+        if (x == null) {
+            x = new Node<>(c);
+        }
+        if (c < x.data) x.left = put(x.left,  key, d);
+        else if (c > x.data) x.right = put(x.right, key, d);
+        else if (d < key.length() - 1) x.mid = put(x.mid,   key, d+1);
+        return x;
+    }
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        for (CharSequence term : terms) {
+            put(String.valueOf(term));
+        }
     }
 
     @Override
@@ -36,12 +56,12 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     /**
      * A search tree node representing a single character in an autocompletion term.
      */
-    private static class Node {
+    private static class Node<V> {
         private final char data;
         private boolean isTerm;
-        private Node left;
-        private Node mid;
-        private Node right;
+        private Node<V> left;
+        private Node<V> mid;
+        private Node<V> right;
 
         public Node(char data) {
             this.data = data;
