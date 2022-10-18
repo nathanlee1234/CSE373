@@ -31,10 +31,10 @@ public class BinarySearchAutocomplete implements Autocomplete {
 
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        ArrayList<CharSequence> matches = new ArrayList<>();
+        List<CharSequence> matches = new ArrayList<>();
         int i = Collections.binarySearch(terms, prefix, CharSequence::compare);
         if (i < 0) return matches;
-        while (Autocomplete.isPrefixOf(prefix, this.terms.get(i))) {
+        while (Autocomplete.isPrefixOf(prefix, terms.get(i))) {
             matches.add(terms.get(i++));
         }
         return matches;
