@@ -36,7 +36,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         if (x == null) {
             x = new Node<>(c);
         }
-        if (c < x.data) x.left = put(x.left,  key, d);
+        if (c < x.data) x.left = put(x.left, key, d);
         else if (c > x.data) x.right = put(x.right, key, d);
         else if (d < key.length() - 1) x.mid = put(x.mid, key,d+1);
         else x.isTerm = true;
@@ -71,7 +71,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     private void collect(Node x, StringBuilder prefix, List<CharSequence> matches) {
         if (x == null) return;
         collect(x.left, prefix, matches);
-        if (x.isTerm) matches.add(prefix.append(x.data).toString());
+        if (x.isTerm) matches.add(prefix.toString() + x.data);
         collect(x.mid, prefix.append(x.data), matches);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, matches);

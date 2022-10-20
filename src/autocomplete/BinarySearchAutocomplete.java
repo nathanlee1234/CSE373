@@ -33,7 +33,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
     public List<CharSequence> allMatches(CharSequence prefix) {
         List<CharSequence> matches = new ArrayList<>();
         int i = Collections.binarySearch(terms, prefix, CharSequence::compare);
-        if (i < 0) return matches;
+        if (i < 0) i = -(i + 1);
         while (Autocomplete.isPrefixOf(prefix, terms.get(i))) {
             matches.add(terms.get(i++));
         }
