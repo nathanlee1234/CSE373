@@ -33,10 +33,7 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public boolean contains(T item) {
-        for (PriorityNode i : items) {
-            if (i.item() == item) return true;
-        }
-        return false;
+        return items.contains(item);
     }
 
     @Override
