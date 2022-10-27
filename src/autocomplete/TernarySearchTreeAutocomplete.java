@@ -24,6 +24,13 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         overallRoot = null;
     }
 
+    @Override
+    public void addAll(Collection<? extends CharSequence> terms) {
+        for (CharSequence term : terms) {
+            put(String.valueOf(term));
+        }
+    }
+
     public void put(String key) {
         if (key == null) {
             throw new IllegalArgumentException("calls put() with null key");
@@ -43,6 +50,11 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         return x;
     }
 
+    @Override
+    public List<CharSequence> allMatches(CharSequence prefix) {
+        return keysWithPrefix(String.valueOf(prefix));
+    }
+
     public List<CharSequence> keysWithPrefix(String prefix) {
         if (prefix == null) {
             throw new IllegalArgumentException("calls keysWithPrefix() with null argument");
@@ -54,8 +66,6 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         collect(x.mid, new StringBuilder(prefix), matches);
         return matches;
     }
-
-
 
     // return subtrie corresponding to given key
     private Node get(Node x, String key, int d) {
@@ -75,17 +85,6 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         collect(x.mid, prefix.append(x.data), matches);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, matches);
-    }
-    @Override
-    public void addAll(Collection<? extends CharSequence> terms) {
-        for (CharSequence term : terms) {
-            put(String.valueOf(term));
-        }
-    }
-
-    @Override
-    public List<CharSequence> allMatches(CharSequence prefix) {
-        return keysWithPrefix(String.valueOf(prefix));
     }
 
     /**
