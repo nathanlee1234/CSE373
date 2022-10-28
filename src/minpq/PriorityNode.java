@@ -70,4 +70,8 @@ class PriorityNode<T> {
     public String toString() {
         return item + " (" + priority + ')';
     }
+
+    public double compareTo(PriorityNode tPriorityNode) {
+        return this.priority() - tPriorityNode.priority();
+    }
 }

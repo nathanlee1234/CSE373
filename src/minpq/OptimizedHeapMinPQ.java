@@ -32,7 +32,8 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        items.add(new PriorityNode<T>(item, priority));
+        PriorityNode node = new PriorityNode<>(item, priority);
+        items.add(node);
         itemToIndex.put(item, items.size() - 1);
         swim(items.size() - 1);
     }
@@ -100,7 +101,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!accessible(index1) && !accessible(index2)) {
             return 0;
         } else if (accessible(index1) && (!accessible(index2)
-                || items.get(index1).priority() < items.get(index2).priority())) {
+                || (items.get(index1).compareTo(items.get(index2))) < 0)) {
             return index1;
         } else {
             return index2;
@@ -109,7 +110,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     private void swim(int index) {
         int parent = parent(index);
-        while (accessible(parent) && items.get(index).priority() < items.get(parent).priority()) {
+        while (accessible(parent) && items.get(index).compareTo(items.get(parent)) < 0) {
             swap(index, parent);
             index = parent;
             parent = parent(index);
@@ -118,7 +119,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     private void sink(int index) {
         int child = min(left(index), right(index));
-        while (accessible(child) && items.get(index).priority() > items.get(child).priority()) {
+        while (accessible(child) && items.get(index).compareTo(items.get(child)) > 0) {
             swap(index, child);
             index = child;
             child = min(left(index), right(index));
@@ -126,8 +127,10 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     private void swap(int index1, int index2) {
-        T temp = items.get(index1).item();
+        PriorityNode<T> temp = items.get(index1);
+        itemToIndex.put(items.get(index2).item(), index1);
+        itemToIndex.put(temp.item(), index2);
         items.set(index1, items.get(index2));
-        items.set(index2, (PriorityNode<T>) temp);
+        items.set(index2, temp);
     }
 }
