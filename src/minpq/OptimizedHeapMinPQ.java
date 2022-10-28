@@ -24,6 +24,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     public OptimizedHeapMinPQ() {
         items = new ArrayList<>();
         itemToIndex = new HashMap<>();
+        items.add(null);
     }
 
     @Override
@@ -32,8 +33,8 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             throw new IllegalArgumentException("Already contains " + item);
         }
         items.add(new PriorityNode<T>(item, priority));
-        itemToIndex.put(item, (int) priority);
-        swim(items.size());
+        itemToIndex.put(item, items.size() - 1);
+        swim(items.size() - 1);
     }
 
     @Override
@@ -56,7 +57,8 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         T min = peekMin();
         swap(1, size());
-        items.remove(size());
+        items.remove(items.size() - 1);
+        itemToIndex.remove(min);
         sink(1);
         return min;
     }
@@ -75,7 +77,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public int size() {
-        return items.size();
+        return items.size() - 1;
     }
 
     private boolean accessible(int index) {
