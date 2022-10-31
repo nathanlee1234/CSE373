@@ -32,8 +32,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        PriorityNode node = new PriorityNode<>(item, priority);
-        items.add(node);
+        items.add(new PriorityNode<>(item, priority));
         itemToIndex.put(item, items.size() - 1);
         swim(items.size() - 1);
     }
@@ -59,8 +58,8 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         T min = peekMin();
         swap(1, size());
         items.remove(items.size() - 1);
-        itemToIndex.remove(min);
         sink(1);
+        itemToIndex.remove(min);
         return min;
     }
 
