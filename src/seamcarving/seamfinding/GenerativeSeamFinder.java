@@ -133,8 +133,23 @@ public class GenerativeSeamFinder implements SeamFinder {
 
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> neighbors = new ArrayList<Edge<Node>>();
+                // if i understand correctly, the first for loop in adjacency is there to account
+                // for pixels sitting on the edge, so i should check if the pixel is sitting on the
+                // image's width or height
+                if (this.x == picture.width()-1 || this.y == picture.height()-1)
+                    neighbors.add(new Edge<>(from, sink, 0));
+                }
+                // Connect the pixel to its right-up, right-middle, and right-down neighbors...
+                // Pretty much from adjacency
+                for (int z = y - 1; z <= y + 1; z += 1) {
+                    // Only if the neighbor is in the bounds of the picture.
+                    if (0 <= z && z < picture.height()) {
+                        Pixel to = new Pixel[x + 1][z];
+                        neighbors.add(new Edge<>(this, to, f.apply(picture, x + 1, z)));
+                    }
+                }
+                return neighbors;
             }
 
             @Override
