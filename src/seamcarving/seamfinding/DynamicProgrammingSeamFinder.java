@@ -20,9 +20,11 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
     public List<Integer> findHorizontal(Picture picture, EnergyFunction f) {
         double [][] graph = new double[picture.width()][picture.height()];
         ArrayList<Integer> res = new ArrayList<>();
+
         for (int i = 0; i < picture.height(); i++) {
             graph[0][i] = f.apply(picture, 0, i);
         }
+
         for (int i = 1; i < picture.width(); i++) {
             for (int j = 0; j < picture.height(); j++) {
                 double min = Double.MAX_VALUE;
@@ -32,8 +34,10 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
                 graph[i][j] = min + f.apply(picture, i, j);
             }
         }
+
         double min = Double.MAX_VALUE;
         int minIndex = 0;
+
         for (int i = 0; i < picture.height(); i++) {
             if (graph[picture.width() - 1][i] < min) {
                 min = graph[picture.width() - 1][i];
@@ -41,6 +45,7 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
             }
         }
         res.add(minIndex);
+
         for (int i = picture.width() - 2; i >= 0; i--) {
             min = Double.MAX_VALUE;
             int start = minIndex - 1, end = minIndex + 1;
@@ -54,6 +59,7 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
             }
             res.add(minIndex);
         }
+
         Collections.reverse(res);
         return res;
     }
