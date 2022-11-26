@@ -72,8 +72,12 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node source = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> res = new ArrayList<>(picture.height());
+                for (int i = 0; i < picture.height(); i++) {
+                    Pixel to = new Pixel(0, i);
+                    res.add(new Edge<>(this, to, f.apply(picture, 0, i)));
+                }
+                return res;
             }
         };
         /**
@@ -82,8 +86,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node sink = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                return List.of();
             }
         };
 
@@ -129,8 +132,19 @@ public class GenerativeSeamFinder implements SeamFinder {
 
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> neighbors = new ArrayList<Edge<Node>>();
+
+                if (this.x == picture.width() - 1) {
+                    neighbors.add(new Edge<>(this, sink, 0));
+                } else {
+                    for (int i = y - 1; i <= y + 1; i++) {
+                        if (i >= 0 && i < picture.height()) {
+                            Pixel to = new Pixel(x + 1, i);
+                            neighbors.add(new Edge<>(this, to, f.apply(picture, x + 1, i)));
+                        }
+                    }
+                }
+                return neighbors;
             }
 
             @Override
