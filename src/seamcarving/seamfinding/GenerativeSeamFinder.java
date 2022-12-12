@@ -139,8 +139,7 @@ public class GenerativeSeamFinder implements SeamFinder {
                 } else {
                     for (int i = y - 1; i <= y + 1; i++) {
                         if (i >= 0 && i < picture.height()) {
-                            Pixel to = new Pixel(x + 1, i);
-                            neighbors.add(new Edge<>(this, to, f.apply(picture, x + 1, i)));
+                            neighbors.add(new Edge<>(this, new Pixel(x + 1, i), f.apply(picture, x + 1, i)));
                         }
                     }
                 }

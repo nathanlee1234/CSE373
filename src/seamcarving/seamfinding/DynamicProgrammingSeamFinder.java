@@ -49,10 +49,9 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
         for (int i = picture.width() - 2; i >= 0; i--) {
             min = Double.MAX_VALUE;
             int start = minIndex - 1, end = minIndex + 1;
-            if (minIndex == 0) start = 0;
-            else if (minIndex == picture.height() - 1) end = minIndex;
+
             for (int j = start; j <= end; j++) {
-                if (graph[i][j] < min) {
+                if (j >= 0 && j < picture.height() && graph[i][j] < min) {
                     min = graph[i][j];
                     minIndex = j;
                 }
